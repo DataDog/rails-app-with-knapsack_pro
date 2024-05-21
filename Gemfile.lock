@@ -168,7 +168,7 @@ GEM
     json (2.6.3)
     juniter (0.1.2)
       ox
-    knapsack_pro (7.1.0)
+    knapsack_pro (7.3.0)
       rake
     launchy (2.5.2)
       addressable (~> 2.8)
