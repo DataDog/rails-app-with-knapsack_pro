@@ -30,7 +30,6 @@ require 'knapsack_pro'
 require 'simplecov'
 SimpleCov.start
 
-
 # CUSTOM_CONFIG_GOES_HERE
 KnapsackPro::Hooks::Queue.before_queue do |queue_id|
   print '-'*10
@@ -109,6 +108,14 @@ if ENV['KNAPSACK_PRO_RSPEC_SPLIT_BY_TEST_EXAMPLES']
     # bin/knapsack_pro_queue_rspec_split_by_test_examples
     puts "CUSTOM_VARIABLE_FOR_RSPEC_TEST_EXAMPLE_DETECTOR is not set"
   end
+end
+
+require 'datadog/ci'
+
+Datadog.configure do |c|
+  c.service = "rails-knapsack-app"
+  c.ci.enabled = true
+  c.ci.instrument :rspec
 end
 
 RSpec.configure do |config|
