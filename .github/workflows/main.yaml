@@ -80,5 +80,9 @@ jobs:
           KNAPSACK_PRO_CI_NODE_INDEX: ${{ matrix.ci_node_index }}
           KNAPSACK_PRO_RSPEC_SPLIT_BY_TEST_EXAMPLES: true
           KNAPSACK_PRO_LOG_LEVEL: info
+          DD_SITE: datadoghq.eu
+          DD_API_KEY: ${{ secrets.DD_API_KEY }}
+          DD_CIVISIBILITY_AGENTLESS_ENABLED: true
+          DD_ENV: ci
         run: |
           bundle exec rake knapsack_pro:queue:rspec
