@@ -61,6 +61,7 @@ group :development, :test do
   gem 'parallel_tests'
 
   gem 'knapsack_pro'
+  gem 'datadog-ci', '~> 1.0.0.beta4'
 
   gem 'test-unit-rails'
 
