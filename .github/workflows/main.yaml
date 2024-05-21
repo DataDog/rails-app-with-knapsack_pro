@@ -11,7 +11,7 @@ jobs:
         image: postgres:10.8
         env:
           POSTGRES_USER: postgres
-          POSTGRES_PASSWORD: ""
+          POSTGRES_PASSWORD: ''
           POSTGRES_DB: postgres
         ports:
           - 5432:5432
@@ -40,43 +40,44 @@ jobs:
       PGHOST: localhost
       PGUSER: postgres
       # Rails verifies Time Zone in DB is the same as time zone of the Rails app
-      TZ: "Europe/Warsaw"
+      TZ: 'Europe/Warsaw'
 
     steps:
-    - uses: actions/checkout@v2
+      - uses: actions/checkout@v2
 
-    - name: show list of env variables
-      run: env
+      - name: show list of env variables
+        run: env
 
-    - name: Setup knapsack_pro gem locally
-      run: |
-        # remove refs/heads from branch name like refs/heads/github-actions
-        export BRANCH=$(ruby -e 'print ENV["GITHUB_REF"].to_s.split("/").last')
-        echo $BRANCH
-        cd /home/runner/work/rails-app-with-knapsack_pro/ && (git clone -b $BRANCH --single-branch https://github.com/KnapsackPro/knapsack_pro-ruby.git || git clone -b master --single-branch https://github.com/KnapsackPro/knapsack_pro-ruby.git)
-        cd /home/runner/work/rails-app-with-knapsack_pro/knapsack_pro-ruby && git branch
-        cd /home/runner/work/rails-app-with-knapsack_pro/knapsack_pro-ruby && git log -n 1 | more
+      - name: Setup knapsack_pro gem locally
+        run: |
+          # remove refs/heads from branch name like refs/heads/github-actions
+          export BRANCH=$(ruby -e 'print ENV["GITHUB_REF"].to_s.split("/").last')
+          echo $BRANCH
+          cd /home/runner/work/rails-app-with-knapsack_pro/ && (git clone -b $BRANCH --single-branch https://github.com/KnapsackPro/knapsack_pro-ruby.git || git clone -b master --single-branch https://github.com/KnapsackPro/knapsack_pro-ruby.git)
+          cd /home/runner/work/rails-app-with-knapsack_pro/knapsack_pro-ruby && git branch
+          cd /home/runner/work/rails-app-with-knapsack_pro/knapsack_pro-ruby && git log -n 1 | more
 
-    - name: Set up Ruby
-      uses: ruby/setup-ruby@v1
-      with:
-        # Not needed with a .ruby-version file
-        ruby-version: 3.2.2
-        # runs 'bundle install' and caches installed gems automatically
-        bundler-cache: true
+      - name: Set up Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          # Not needed with a .ruby-version file
+          ruby-version: 3.2.2
+          # runs 'bundle install' and caches installed gems automatically
+          bundler-cache: true
 
-    - name: Check Ruby version
-      run: |
-        ruby -v
+      - name: Check Ruby version
+        run: |
+          ruby -v
 
-    - name: create DB
-      run: |
-        bin/rails db:prepare
+      - name: create DB
+        run: |
+          bin/rails db:prepare
 
-    - name: Run tests
-      env:
-        KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC: ${{ secrets.KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC }}
-        KNAPSACK_PRO_CI_NODE_TOTAL: ${{ matrix.ci_node_total }}
-        KNAPSACK_PRO_CI_NODE_INDEX: ${{ matrix.ci_node_index }}
-      run: |
-        bundle exec rake knapsack_pro:queue:rspec
+      - name: Run tests
+        env:
+          KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC: ${{ secrets.KNAPSACK_PRO_TEST_SUITE_TOKEN_RSPEC }}
+          KNAPSACK_PRO_CI_NODE_TOTAL: ${{ matrix.ci_node_total }}
+          KNAPSACK_PRO_CI_NODE_INDEX: ${{ matrix.ci_node_index }}
+          KNAPSACK_PRO_RSPEC_SPLIT_BY_TEST_EXAMPLES: true
+        run: |
+          bundle exec rake knapsack_pro:queue:rspec
