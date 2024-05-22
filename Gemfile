@@ -61,7 +61,7 @@ group :development, :test do
   gem 'parallel_tests'
 
   gem 'knapsack_pro'
-  gem 'datadog-ci', '~> 1.0.0.beta4'
+  gem 'datadog-ci', github: "DataDog/datadog-ci-rb", ref: "anmarchenko/knapsack_pro_integration"
 
   gem 'test-unit-rails'
 

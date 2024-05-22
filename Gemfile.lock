@@ -1,3 +1,12 @@
+GIT
+  remote: https://github.com/DataDog/datadog-ci-rb.git
+  revision: 25bf96cb79a6cf84ab1289748e244f4c8ae25d60
+  ref: anmarchenko/knapsack_pro_integration
+  specs:
+    datadog-ci (1.0.0.beta4)
+      datadog (~> 2.0.0.beta2)
+      msgpack
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -148,9 +157,6 @@ GEM
       libdatadog (~> 7.0.0.1.0)
       libddwaf (~> 1.14.0.0.0)
       msgpack
-    datadog-ci (1.0.0.beta4)
-      datadog (~> 2.0.0.beta2)
-      msgpack
     date (3.3.3)
     debase-ruby_core_source (3.3.1)
     debug_inspector (1.1.0)
@@ -158,7 +164,7 @@ GEM
     docile (1.4.0)
     erubi (1.12.0)
     execjs (2.8.1)
-    ffi (1.15.5)
+    ffi (1.16.3)
     fiber-local (1.0.0)
     gherkin-ruby (0.3.2)
     globalid (1.1.0)
@@ -406,7 +412,7 @@ DEPENDENCIES
   coffee-rails
   cucumber-rails
   database_cleaner
-  datadog-ci (~> 1.0.0.beta4)
+  datadog-ci!
   jbuilder (~> 2.0)
   jquery-rails
   juniter
